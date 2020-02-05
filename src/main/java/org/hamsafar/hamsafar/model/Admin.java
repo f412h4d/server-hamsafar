@@ -15,7 +15,7 @@ import java.util.HashSet;
 @GraphQLType
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Admin extends AuditModel {
     @Indexed(unique = true)
     @ToString.Exclude

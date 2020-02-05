@@ -16,7 +16,7 @@ import java.util.HashSet;
 @GraphQLType
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class User extends AuditModel {
     @Indexed(unique = true)
     private String phoneNumber;

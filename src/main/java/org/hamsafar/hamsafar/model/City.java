@@ -15,7 +15,7 @@ import java.util.List;
 @GraphQLType
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class City extends AuditModel {
     private List<String> names;
 

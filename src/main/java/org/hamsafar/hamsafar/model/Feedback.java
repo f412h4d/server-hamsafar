@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @GraphQLType
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Feedback extends AuditModel {
     @DBRef
     @Indexed(unique = true)

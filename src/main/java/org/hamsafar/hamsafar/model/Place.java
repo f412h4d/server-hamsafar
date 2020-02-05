@@ -14,7 +14,7 @@ import java.util.HashSet;
 @GraphQLType
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Place extends AuditModel {
     @DBRef
     @ToString.Exclude

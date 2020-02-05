@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @GraphQLType
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Picture extends AuditModel {
     private String path;
 }

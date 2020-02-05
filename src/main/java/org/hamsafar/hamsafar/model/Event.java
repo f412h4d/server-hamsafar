@@ -15,7 +15,7 @@ import java.util.HashSet;
 @GraphQLType
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Event extends AuditModel {
     private String title;
     private String detail;
