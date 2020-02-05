@@ -34,6 +34,7 @@ public class Seeder implements CommandLineRunner {
         names.add("کیش");
         City city = City.builder()
                 .names(names)
+                .places(new LinkedHashSet<>())
                 .data("RANDOM DATA")
                 .build();
         this.cityRepository.save(city);
