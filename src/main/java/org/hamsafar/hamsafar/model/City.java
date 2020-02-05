@@ -6,8 +6,8 @@ import org.hamsafar.hamsafar.model.audits.AuditModel;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -22,7 +22,7 @@ public class City extends AuditModel {
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private HashSet<Place> places;
+    private Set<Place> places;
 
     private String data;
 }

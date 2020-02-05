@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -36,5 +36,5 @@ public class User extends AuditModel {
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private HashSet<Place> visited;
+    private Set<Place> visited;
 }

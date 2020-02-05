@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
-import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -34,5 +34,5 @@ public class Event extends AuditModel {
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private HashSet<Feedback> feedbacks;
+    private Set<Feedback> feedbacks;
 }

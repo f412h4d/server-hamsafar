@@ -6,7 +6,7 @@ import org.hamsafar.hamsafar.model.audits.AuditModel;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -30,23 +30,23 @@ public class Place extends AuditModel {
     private String detail;
     private String rules;
 
-    private Double lat;
-    private Double lng;
+    private Float lat;
+    private Float lng;
 
     private Float rate;
 
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private HashSet<Feedback> feedbacks;
+    private Set<Feedback> feedbacks;
 
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private HashSet<User> views;
+    private Set<User> views;
 
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private HashSet<Picture> pictures;
+    private Set<Picture> pictures;
 }
