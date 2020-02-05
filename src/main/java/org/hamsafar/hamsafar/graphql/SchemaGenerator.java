@@ -8,6 +8,7 @@ import io.leangen.graphql.metadata.strategy.value.jackson.JacksonValueMapperFact
 import lombok.AllArgsConstructor;
 import org.hamsafar.hamsafar.graphql.services.AdminService;
 import org.hamsafar.hamsafar.graphql.services.CityService;
+import org.hamsafar.hamsafar.graphql.services.PlaceService;
 import org.hamsafar.hamsafar.graphql.services.auth.AdminAuth;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,14 @@ public class SchemaGenerator {
     private final AdminAuth adminAuth;
 
     private final CityService cityService;
+    private final PlaceService placeService;
 
     @Bean
     public GraphQL getGraphQL() {
         GraphQLSchema schema = new GraphQLSchemaGenerator()
                 .withResolverBuilders(
                         new AnnotatedResolverBuilder())
-                .withOperationsFromSingletons(adminService, adminAuth, cityService)
+                .withOperationsFromSingletons(adminService, adminAuth, cityService, placeService)
                 .withValueMapperFactory(new JacksonValueMapperFactory())
                 .generate();
         return GraphQL.newGraphQL(schema).build();
