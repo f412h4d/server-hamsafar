@@ -21,6 +21,8 @@ public class Event extends AuditModel {
     private String detail;
 
     @DBRef
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Place destination;
 
     private Float rate;
@@ -30,5 +32,7 @@ public class Event extends AuditModel {
     private Date date;
 
     @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private HashSet<Feedback> feedbacks;
 }

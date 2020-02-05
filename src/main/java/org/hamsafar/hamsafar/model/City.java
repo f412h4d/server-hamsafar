@@ -20,6 +20,8 @@ public class City extends AuditModel {
     private List<String> names;
 
     @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private HashSet<Place> places;
 
     private String data;

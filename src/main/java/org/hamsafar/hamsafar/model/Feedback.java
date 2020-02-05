@@ -17,9 +17,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Feedback extends AuditModel {
     @DBRef
     @Indexed(unique = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private User user;
 
     @DBRef
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Place place;
 
     private Integer rate;

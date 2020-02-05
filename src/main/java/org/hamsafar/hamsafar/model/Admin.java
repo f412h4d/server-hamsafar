@@ -18,6 +18,8 @@ import java.util.HashSet;
 @EqualsAndHashCode
 public class Admin extends AuditModel {
     @Indexed(unique = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private String username;
 
     private String name;
@@ -28,5 +30,7 @@ public class Admin extends AuditModel {
     private Integer credit;
 
     @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private HashSet<Place> places;
 }

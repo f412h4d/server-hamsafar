@@ -17,9 +17,13 @@ import java.util.HashSet;
 @EqualsAndHashCode
 public class Place extends AuditModel {
     @DBRef
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Admin admin;
 
     @DBRef
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private City city;
 
     private String title;
@@ -32,11 +36,17 @@ public class Place extends AuditModel {
     private Float rate;
 
     @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private HashSet<Feedback> feedbacks;
 
     @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private HashSet<User> views;
 
     @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private HashSet<Picture> pictures;
 }

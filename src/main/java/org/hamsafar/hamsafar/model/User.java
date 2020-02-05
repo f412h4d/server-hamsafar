@@ -27,10 +27,14 @@ public class User extends AuditModel {
     private Picture picture;
 
     @DBRef
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private City city;
 
     private Integer level;
 
     @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private HashSet<Place> visited;
 }
