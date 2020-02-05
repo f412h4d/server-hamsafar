@@ -6,7 +6,7 @@ import org.hamsafar.hamsafar.model.audits.AuditModel;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.HashSet;
 
 @Data
 @Builder
@@ -25,5 +25,5 @@ public class Admin extends AuditModel {
     private Integer credit;
 
     @DBRef(lazy = true)
-    private List<City> cities;
+    private HashSet<Place> places;
 }

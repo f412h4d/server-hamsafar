@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashSet;
-import java.util.List;
 
 @Data
 @Builder
@@ -17,6 +16,12 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Place extends AuditModel {
+    @DBRef
+    private Admin admin;
+
+    @DBRef
+    private City city;
+
     private String title;
     private String detail;
     private String rules;
@@ -24,15 +29,14 @@ public class Place extends AuditModel {
     private Double lat;
     private Double lng;
 
-    @DBRef
-    private City city;
+    private Float rate;
 
     @DBRef(lazy = true)
     private HashSet<Feedback> feedbacks;
 
     @DBRef(lazy = true)
-    private List<User> views;
+    private HashSet<User> views;
 
     @DBRef(lazy = true)
-    private List<Picture> pictures;
+    private HashSet<Picture> pictures;
 }

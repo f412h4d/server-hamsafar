@@ -17,6 +17,7 @@ public class Feedback extends AuditModel {
     @DBRef
     private User user;
 
+    @DBRef
     private Place place;
 
     private Integer rate;
