@@ -25,10 +25,11 @@ public class Seeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        init();
+//        init();
     }
 
     private void init() {
+        log.info("Initializing The DB");
         List<String> names = new LinkedList<>();
         names.add("Kish");
         names.add("کیش");
