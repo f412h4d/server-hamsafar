@@ -1,6 +1,7 @@
 package org.hamsafar.hamsafar.graphql.services;
 
 import io.leangen.graphql.annotations.GraphQLArgument;
+import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,16 @@ public class PlaceService {
                                                      @GraphQLArgument(name = "size", defaultValue = "10", description = "Limit the size of fetched results") int size) {
         log.error("Got Places By Size");
         Pageable pageable = PageRequest.of(offset, size);
-        return placeRepository.findAll(pageable).get();
+        return placeRepository.findAllByVerified(true, pageable).get();
+    }
+
+    @GraphQLQuery
+    public Stream<Place> getAllAdminsPlacesBySizeAndOffset(@GraphQLNonNull String adminId,
+                                                           @GraphQLArgument(name = "offset", defaultValue = "0", description = "Offset item from beginning of data") int offset,
+                                                           @GraphQLArgument(name = "size", defaultValue = "10", description = "Limit the size of fetched results") int size) {
+        log.error("Got Places By Size And Admin");
+
+        Pageable pageable = PageRequest.of(offset, size);
+        return placeRepository.findAllByVerifiedAndAdmin_Id(true, adminId, pageable).get();
     }
 }
