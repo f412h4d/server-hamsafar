@@ -23,6 +23,11 @@ public class Event extends AuditModel {
     @DBRef
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    private Tag tag;
+
+    @DBRef
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Place destination;
 
     private Float rate;
