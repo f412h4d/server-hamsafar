@@ -71,5 +71,10 @@ public class Place extends AuditModel {
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    private Set<User> books;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Picture> pictures;
 }

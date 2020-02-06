@@ -71,6 +71,7 @@ public class PlaceAdjust {
                 .checkedIns(new LinkedHashSet<>())
                 .feedbacks(new LinkedHashSet<>())
                 .events(new LinkedHashSet<>())
+                .books(new LinkedHashSet<>())
                 .views(new LinkedHashSet<>())
                 // todo set pictures
                 .pictures(new LinkedHashSet<>())

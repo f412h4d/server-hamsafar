@@ -70,6 +70,7 @@ public class EventAdjust {
                 .checkedIns(new LinkedHashSet<>())
                 .feedbacks(new LinkedHashSet<>())
                 .views(new LinkedHashSet<>())
+                .books(new LinkedHashSet<>())
                 // todo set pictures
                 .picture(null)
                 .build());

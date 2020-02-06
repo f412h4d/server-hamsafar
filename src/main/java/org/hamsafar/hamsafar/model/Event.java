@@ -62,6 +62,11 @@ public class Event extends AuditModel {
     @EqualsAndHashCode.Exclude
     private Set<User> checkedIns;
 
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<User> books;
+
     @DBRef
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
