@@ -23,4 +23,9 @@ public class City extends AuditModel {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Place> places;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Event> events;
 }

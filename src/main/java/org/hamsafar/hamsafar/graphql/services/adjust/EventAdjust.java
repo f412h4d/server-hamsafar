@@ -5,17 +5,13 @@ import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hamsafar.hamsafar.model.Admin;
-import org.hamsafar.hamsafar.model.City;
-import org.hamsafar.hamsafar.model.Place;
-import org.hamsafar.hamsafar.model.Tag;
-import org.hamsafar.hamsafar.repository.AdminRepository;
-import org.hamsafar.hamsafar.repository.CityRepository;
-import org.hamsafar.hamsafar.repository.PlaceRepository;
-import org.hamsafar.hamsafar.repository.TagRepository;
+import org.hamsafar.hamsafar.model.*;
+import org.hamsafar.hamsafar.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 
@@ -24,21 +20,22 @@ import java.util.Optional;
 @GraphQLApi
 @CrossOrigin
 @AllArgsConstructor
-public class PlaceAdjust {
+public class EventAdjust {
     private final TagRepository tagRepository;
     private final CityRepository cityRepository;
     private final AdminRepository adminRepository;
+    private final EventRepository eventRepository;
     private final PlaceRepository placeRepository;
 
     @GraphQLMutation
-    public Place addPlaceToCity(@GraphQLNonNull String tagId,
+    public Event addEventToCity(@GraphQLNonNull String tagId,
                                 @GraphQLNonNull String cityId,
                                 @GraphQLNonNull String adminId,
+                                @GraphQLNonNull String placeId,
                                 @GraphQLNonNull String title,
-                                @GraphQLNonNull String detail,
-                                @GraphQLNonNull String rules,
-                                @GraphQLNonNull Float lat,
-                                @GraphQLNonNull Float lng) {
+                                @GraphQLNonNull Integer capacity,
+                                @GraphQLNonNull Long time,
+                                @GraphQLNonNull String detail) {
         Optional<Tag> optionalTag = this.tagRepository.findByIdAndVerifiedTrue(tagId);
         if (optionalTag.isEmpty()) {
             throw new RuntimeException("Invalid Tag Id, Not Found");
@@ -51,34 +48,41 @@ public class PlaceAdjust {
         if (optionalAdmin.isEmpty()) {
             throw new RuntimeException("Invalid Admin Id, Not Found");
         }
+        Optional<Place> optionalPlace = this.placeRepository.findByIdAndVerifiedTrue(placeId);
+        if (optionalPlace.isEmpty()) {
+            throw new RuntimeException("Invalid Place Id, Not Found");
+        }
 
-        Place place = this.placeRepository.save(Place.builder()
+        Event event = this.eventRepository.save(Event.builder()
                 .admin(optionalAdmin.get())
                 .tag(optionalTag.get())
                 .city(optionalCity.get())
+                .destination(optionalPlace.get())
                 .title(title)
                 .detail(detail)
-                .rules(rules)
-                .lat(lat)
-                .lng(lng)
+                .capacity(capacity)
+                .date(new Date(new Timestamp(time).getTime()))
                 .isAd(false)
                 .adViews(0)
                 .adLimit(0)
                 .feedbacks(new LinkedHashSet<>())
                 .views(new LinkedHashSet<>())
                 // todo set pictures
-                .pictures(new LinkedHashSet<>())
+                .picture(null)
                 .build());
 
-        optionalCity.get().getPlaces().add(place);
+        optionalCity.get().getEvents().add(event);
         this.cityRepository.save(optionalCity.get());
 
-        optionalTag.get().getPlaces().add(place);
+        optionalTag.get().getEvents().add(event);
         this.tagRepository.save(optionalTag.get());
 
-        optionalAdmin.get().getPlaces().add(place);
+        optionalAdmin.get().getEvents().add(event);
         this.adminRepository.save(optionalAdmin.get());
 
-        return place;
+        optionalPlace.get().getEvents().add(event);
+        this.placeRepository.save(optionalPlace.get());
+
+        return event;
     }
 }

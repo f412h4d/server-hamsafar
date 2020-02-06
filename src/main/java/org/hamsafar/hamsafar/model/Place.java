@@ -49,6 +49,11 @@ public class Place extends AuditModel {
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    private Set<Event> events;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Feedback> feedbacks;
 
     @DBRef(lazy = true)
