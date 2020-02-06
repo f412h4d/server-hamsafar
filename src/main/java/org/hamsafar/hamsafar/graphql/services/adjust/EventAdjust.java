@@ -74,9 +74,6 @@ public class EventAdjust {
         optionalCity.get().getEvents().add(event);
         this.cityRepository.save(optionalCity.get());
 
-        optionalTag.get().getEvents().add(event);
-        this.tagRepository.save(optionalTag.get());
-
         optionalAdmin.get().getEvents().add(event);
         this.adminRepository.save(optionalAdmin.get());
 

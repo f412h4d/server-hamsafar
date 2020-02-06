@@ -7,7 +7,6 @@ import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hamsafar.hamsafar.model.Place;
-import org.hamsafar.hamsafar.model.Tag;
 import org.hamsafar.hamsafar.repository.PlaceRepository;
 import org.hamsafar.hamsafar.repository.TagRepository;
 import org.springframework.data.domain.PageRequest;
@@ -15,8 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -45,11 +43,7 @@ public class PlaceSearch {
 
 
     @GraphQLQuery
-    Set<Place> getAllPlacesByTagId(@GraphQLNonNull String tagId) {
-        Optional<Tag> optionalTag = this.tagRepository.findByIdAndVerifiedTrue(tagId);
-        if (optionalTag.isEmpty()) {
-            throw new RuntimeException("Invalid Tag Id, Not Found");
-        }
-        return optionalTag.get().getPlaces();
+    List<Place> getAllPlacesByTagId(@GraphQLNonNull String tagId) {
+        return this.placeRepository.findAllByVerifiedTrueAndTag_Id(tagId);
     }
 }

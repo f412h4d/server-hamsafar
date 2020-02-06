@@ -10,8 +10,6 @@ import org.hamsafar.hamsafar.repository.TagRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.LinkedHashSet;
-
 @Slf4j
 @Service
 @GraphQLApi
@@ -24,7 +22,6 @@ public class TagAdjust {
     public Tag addTag(@GraphQLNonNull String title) {
         return this.tagRepository.save(Tag.builder()
                 .title(title)
-                .places(new LinkedHashSet<>())
                 .build());
     }
 }

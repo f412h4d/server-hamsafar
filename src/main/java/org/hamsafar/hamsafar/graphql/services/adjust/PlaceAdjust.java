@@ -73,9 +73,6 @@ public class PlaceAdjust {
         optionalCity.get().getPlaces().add(place);
         this.cityRepository.save(optionalCity.get());
 
-        optionalTag.get().getPlaces().add(place);
-        this.tagRepository.save(optionalTag.get());
-
         optionalAdmin.get().getPlaces().add(place);
         this.adminRepository.save(optionalAdmin.get());
 

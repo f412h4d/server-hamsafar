@@ -18,4 +18,6 @@ public interface EventRepository extends MongoRepository<Event, String> {
     Page<Event> findAllByVerified(Boolean isVerified, Pageable pageable);
 
     Page<Event> findAllByVerifiedOrderByRate(Boolean isVerified, Pageable pageable);
+
+    List<Event> findAllByVerifiedTrueAndTag_Id(String tagId);
 }

@@ -23,4 +23,6 @@ public interface PlaceRepository extends MongoRepository<Place, String> {
     Page<Place> findAllByVerifiedOrderByRate(Boolean isVerified, Pageable pageable);
 
     Page<Place> findAllByVerifiedAndAdmin_Id(Boolean isVerified, String adminId, Pageable pageable);
+
+    List<Place> findAllByVerifiedTrueAndTag_Id(String tagId);
 }

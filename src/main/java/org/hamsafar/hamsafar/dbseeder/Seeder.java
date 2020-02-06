@@ -28,7 +28,7 @@ public class Seeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        init();
+//        init();
     }
 
     private void init() {
@@ -57,7 +57,6 @@ public class Seeder implements CommandLineRunner {
 
         Tag tag = Tag.builder()
                 .title("خدماتی")
-                .places(new LinkedHashSet<>())
                 .build();
         this.tagRepository.save(tag);
 

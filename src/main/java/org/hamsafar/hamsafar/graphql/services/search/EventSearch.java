@@ -7,17 +7,14 @@ import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hamsafar.hamsafar.model.Event;
-import org.hamsafar.hamsafar.model.Tag;
 import org.hamsafar.hamsafar.model.audits.AuditModel;
 import org.hamsafar.hamsafar.repository.EventRepository;
-import org.hamsafar.hamsafar.repository.TagRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -26,7 +23,6 @@ import java.util.stream.Stream;
 @CrossOrigin
 @AllArgsConstructor
 public class EventSearch extends AuditModel {
-    private final TagRepository tagRepository;
     private final EventRepository eventRepository;
 
     @GraphQLQuery
@@ -44,11 +40,7 @@ public class EventSearch extends AuditModel {
     }
 
     @GraphQLQuery
-    Set<Event> getAllPlacesByTagId(@GraphQLNonNull String tagId) {
-        Optional<Tag> optionalTag = this.tagRepository.findByIdAndVerifiedTrue(tagId);
-        if (optionalTag.isEmpty()) {
-            throw new RuntimeException("Invalid Tag Id, Not Found");
-        }
-        return optionalTag.get().getEvents();
+    List<Event> getAllPlacesByTagId(@GraphQLNonNull String tagId) {
+        return this.eventRepository.findAllByVerifiedTrueAndTag_Id(tagId);
     }
 }
