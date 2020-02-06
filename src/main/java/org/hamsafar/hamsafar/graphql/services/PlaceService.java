@@ -1,19 +1,17 @@
 package org.hamsafar.hamsafar.graphql.services;
 
-import io.leangen.graphql.annotations.GraphQLArgument;
+import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hamsafar.hamsafar.model.Place;
 import org.hamsafar.hamsafar.repository.PlaceRepository;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -29,10 +27,11 @@ public class PlaceService {
     }
 
     @GraphQLQuery
-    public Stream<Place> getAllPlacesBySizeAndOffset(@GraphQLArgument(name = "offset", defaultValue = "0", description = "Offset item from beginning of data") int offset,
-                                                     @GraphQLArgument(name = "size", defaultValue = "10", description = "Limit the size of fetched results") int size) {
-        log.error("Got Places By Size");
-        Pageable pageable = PageRequest.of(offset, size);
-        return placeRepository.findAllByVerified(true, pageable).get();
+    public Place getPlaceById(@GraphQLNonNull String placeId) {
+        Optional<Place> optionalPlace = this.placeRepository.findByIdAndVerifiedTrue(placeId);
+        if (optionalPlace.isEmpty()) {
+            throw new RuntimeException("Invalid Place Id, Not Found");
+        }
+        return optionalPlace.get();
     }
 }

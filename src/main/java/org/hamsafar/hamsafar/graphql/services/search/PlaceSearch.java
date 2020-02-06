@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -28,11 +27,6 @@ import java.util.stream.Stream;
 public class PlaceSearch {
     private final TagRepository tagRepository;
     private final PlaceRepository placeRepository;
-
-    @GraphQLQuery
-    List<Place> getAllPlaces() {
-        return this.placeRepository.findAllByVerifiedTrue();
-    }
 
     @GraphQLQuery
     public Stream<Place> getAllPlacesBySizeAndOffset(@GraphQLArgument(name = "offset", defaultValue = "0", description = "Offset item from beginning of data") int offset,
