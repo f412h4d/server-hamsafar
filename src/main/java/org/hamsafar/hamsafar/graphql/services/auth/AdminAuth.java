@@ -19,8 +19,8 @@ import java.util.Optional;
 @CrossOrigin
 @AllArgsConstructor
 public class AdminAuth {
-    private final AdminRepository adminRepository;
     private final AdminAdjust adminAdjust;
+    private final AdminRepository adminRepository;
 
     @GraphQLMutation
     public Admin signUpAdmin(String name,
