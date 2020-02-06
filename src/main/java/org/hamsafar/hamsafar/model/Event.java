@@ -20,6 +20,10 @@ public class Event extends AuditModel {
     private String title;
     private String detail;
 
+    private Boolean isAd;
+    private Integer adViews;
+    private Integer adLimit;
+
     @DBRef
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

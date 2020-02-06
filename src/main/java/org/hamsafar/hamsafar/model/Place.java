@@ -40,6 +40,10 @@ public class Place extends AuditModel {
     private Float lat;
     private Float lng;
 
+    private Boolean isAd;
+    private Integer adViews;
+    private Integer adLimit;
+
     private Float rate;
 
     @DBRef(lazy = true)
