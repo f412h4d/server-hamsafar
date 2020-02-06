@@ -28,7 +28,7 @@ public class Seeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-//        init();
+        init();
     }
 
     private void init() {
