@@ -14,4 +14,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode(callSuper = false)
 public class Badge extends AuditModel {
     private String title;
+    // todo badge
+    private Picture picture;
 }
