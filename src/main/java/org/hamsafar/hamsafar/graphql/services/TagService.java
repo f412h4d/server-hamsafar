@@ -38,16 +38,6 @@ public class TagService {
         return tagOptional.get();
     }
 
-    @GraphQLQuery
-    public Tag getTagByTitle(@GraphQLNonNull String title) {
-        Optional<Tag> tagOptional = this.tagRepository.findByTitleAndVerifiedTrue(title);
-        if (tagOptional.isEmpty()) {
-            log.error("Invalid Tag Title");
-            throw new RuntimeException("Invalid Tag Title, Not Found");
-        }
-        return tagOptional.get();
-    }
-
     @GraphQLMutation
     public Tag addTag(@GraphQLNonNull String title) {
         return this.tagRepository.save(Tag.builder()
