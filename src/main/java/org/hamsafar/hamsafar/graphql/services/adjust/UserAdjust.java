@@ -124,4 +124,42 @@ public class UserAdjust {
 
         return this.userRepository.save(optionalUser.get());
     }
+
+    @GraphQLMutation
+    public User viewPlace(@GraphQLNonNull String phoneNumber,
+                          @GraphQLNonNull String placeId) {
+        Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("Invalid User Id, Not Found");
+        }
+        Optional<Place> optionalPlace = this.placeRepository.findByIdAndVerifiedTrue(placeId);
+        if (optionalPlace.isEmpty()) {
+            throw new RuntimeException("Invalid Place Id, Not Found");
+        }
+        optionalPlace.get().getViews().add(optionalUser.get());
+        this.placeRepository.save(optionalPlace.get());
+
+        optionalUser.get().getViewedPlaces().add(optionalPlace.get());
+
+        return this.userRepository.save(optionalUser.get());
+    }
+
+    @GraphQLMutation
+    public User viewEvent(@GraphQLNonNull String phoneNumber,
+                          @GraphQLNonNull String eventId) {
+        Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("Invalid User Id, Not Found");
+        }
+        Optional<Event> optionalEvent = this.eventRepository.findByIdAndVerifiedTrue(eventId);
+        if (optionalEvent.isEmpty()) {
+            throw new RuntimeException("Invalid Event Id, Not Found");
+        }
+        optionalEvent.get().getViews().add(optionalUser.get());
+        this.eventRepository.save(optionalEvent.get());
+
+        optionalUser.get().getViewedEvents().add(optionalEvent.get());
+
+        return this.userRepository.save(optionalUser.get());
+    }
 }
