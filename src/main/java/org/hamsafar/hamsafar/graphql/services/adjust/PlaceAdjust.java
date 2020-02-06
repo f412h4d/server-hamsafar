@@ -38,6 +38,7 @@ public class PlaceAdjust {
                                 @GraphQLNonNull String header,
                                 @GraphQLNonNull String detail,
                                 @GraphQLNonNull String rules,
+                                @GraphQLNonNull Integer checkInRadius,
                                 @GraphQLNonNull Float lat,
                                 @GraphQLNonNull Float lng) {
         Optional<Tag> optionalTag = this.tagRepository.findByIdAndVerifiedTrue(tagId);
@@ -63,6 +64,7 @@ public class PlaceAdjust {
                 .rules(rules)
                 .lat(lat)
                 .lng(lng)
+                .checkInRadius(checkInRadius)
                 .isAd(false)
                 .adViews(0)
                 .adLimit(0)

@@ -40,6 +40,7 @@ public class Place extends AuditModel {
 
     private Float lat;
     private Float lng;
+    private Integer checkInRadius;
 
     private Boolean isAd;
     private Integer adViews;
