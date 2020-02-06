@@ -34,6 +34,7 @@ public class Place extends AuditModel {
     private City city;
 
     private String title;
+    private String header;
     private String detail;
     private String rules;
 
@@ -60,6 +61,11 @@ public class Place extends AuditModel {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<User> views;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<User> checkedIns;
 
     @DBRef(lazy = true)
     @ToString.Exclude

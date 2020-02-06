@@ -40,6 +40,7 @@ public class Event extends AuditModel {
     private Place destination;
 
     private String title;
+    private String header;
     private String detail;
 
     private Boolean isAd;
@@ -55,6 +56,11 @@ public class Event extends AuditModel {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<User> views;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<User> checkedIns;
 
     @DBRef
     @ToString.Exclude

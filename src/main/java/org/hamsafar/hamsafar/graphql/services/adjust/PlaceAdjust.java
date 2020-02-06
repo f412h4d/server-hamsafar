@@ -35,6 +35,7 @@ public class PlaceAdjust {
                                 @GraphQLNonNull String cityId,
                                 @GraphQLNonNull String adminId,
                                 @GraphQLNonNull String title,
+                                @GraphQLNonNull String header,
                                 @GraphQLNonNull String detail,
                                 @GraphQLNonNull String rules,
                                 @GraphQLNonNull Float lat,
@@ -57,6 +58,7 @@ public class PlaceAdjust {
                 .tag(optionalTag.get())
                 .city(optionalCity.get())
                 .title(title)
+                .header(header)
                 .detail(detail)
                 .rules(rules)
                 .lat(lat)
@@ -64,7 +66,9 @@ public class PlaceAdjust {
                 .isAd(false)
                 .adViews(0)
                 .adLimit(0)
+                .checkedIns(new LinkedHashSet<>())
                 .feedbacks(new LinkedHashSet<>())
+                .events(new LinkedHashSet<>())
                 .views(new LinkedHashSet<>())
                 // todo set pictures
                 .pictures(new LinkedHashSet<>())

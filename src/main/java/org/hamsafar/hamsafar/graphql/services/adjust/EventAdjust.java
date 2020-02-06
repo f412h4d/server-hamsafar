@@ -33,9 +33,10 @@ public class EventAdjust {
                                 @GraphQLNonNull String adminId,
                                 @GraphQLNonNull String placeId,
                                 @GraphQLNonNull String title,
+                                @GraphQLNonNull String header,
+                                @GraphQLNonNull String detail,
                                 @GraphQLNonNull Integer capacity,
-                                @GraphQLNonNull Long time,
-                                @GraphQLNonNull String detail) {
+                                @GraphQLNonNull Long time) {
         Optional<Tag> optionalTag = this.tagRepository.findByIdAndVerifiedTrue(tagId);
         if (optionalTag.isEmpty()) {
             throw new RuntimeException("Invalid Tag Id, Not Found");
@@ -59,12 +60,14 @@ public class EventAdjust {
                 .city(optionalCity.get())
                 .destination(optionalPlace.get())
                 .title(title)
+                .header(header)
                 .detail(detail)
                 .capacity(capacity)
                 .date(new Date(new Timestamp(time).getTime()))
                 .isAd(false)
                 .adViews(0)
                 .adLimit(0)
+                .checkedIns(new LinkedHashSet<>())
                 .feedbacks(new LinkedHashSet<>())
                 .views(new LinkedHashSet<>())
                 // todo set pictures
