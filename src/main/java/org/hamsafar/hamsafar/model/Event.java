@@ -48,6 +48,7 @@ public class Event extends AuditModel {
 
     private Integer capacity;
 
+    private Float rate;
     private Date date;
 
     @DBRef(lazy = true)

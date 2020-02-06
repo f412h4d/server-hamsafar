@@ -32,9 +32,15 @@ public class EventSearch extends AuditModel {
     @GraphQLQuery
     public Stream<Event> getAllEventsBySizeAndOffset(@GraphQLArgument(name = "offset", defaultValue = "0", description = "Offset item from beginning of data") int offset,
                                                      @GraphQLArgument(name = "size", defaultValue = "10", description = "Limit the size of fetched results") int size) {
-        log.error("Got Events By Size");
         Pageable pageable = PageRequest.of(offset, size);
-        return this.eventRepository.findAll(pageable).get();
+        return this.eventRepository.findAllByVerified(true, pageable).get();
+    }
+
+    @GraphQLQuery
+    public Stream<Event> sortAllEventsByRate(@GraphQLArgument(name = "offset", defaultValue = "0", description = "Offset item from beginning of data") int offset,
+                                             @GraphQLArgument(name = "size", defaultValue = "10", description = "Limit the size of fetched results") int size) {
+        Pageable pageable = PageRequest.of(offset, size);
+        return this.eventRepository.findAllByVerifiedOrderByRate(true, pageable).get();
     }
 
     @GraphQLQuery

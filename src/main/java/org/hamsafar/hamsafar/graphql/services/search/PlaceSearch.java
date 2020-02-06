@@ -30,11 +30,19 @@ public class PlaceSearch {
 
     @GraphQLQuery
     public Stream<Place> getAllPlacesBySizeAndOffset(@GraphQLArgument(name = "offset", defaultValue = "0", description = "Offset item from beginning of data") int offset,
-                                                    @GraphQLArgument(name = "size", defaultValue = "10", description = "Limit the size of fetched results") int size) {
+                                                     @GraphQLArgument(name = "size", defaultValue = "10", description = "Limit the size of fetched results") int size) {
         log.error("Got Places By Size");
         Pageable pageable = PageRequest.of(offset, size);
-        return this.placeRepository.findAll(pageable).get();
+        return this.placeRepository.findAllByVerified(true, pageable).get();
     }
+
+    @GraphQLQuery
+    public Stream<Place> sortAllPlacesByRate(@GraphQLArgument(name = "offset", defaultValue = "0", description = "Offset item from beginning of data") int offset,
+                                             @GraphQLArgument(name = "size", defaultValue = "10", description = "Limit the size of fetched results") int size) {
+        Pageable pageable = PageRequest.of(offset, size);
+        return this.placeRepository.findAllByVerifiedOrderByRate(true, pageable).get();
+    }
+
 
     @GraphQLQuery
     Set<Place> getAllPlacesByTagId(@GraphQLNonNull String tagId) {
