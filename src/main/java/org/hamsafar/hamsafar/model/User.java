@@ -22,6 +22,7 @@ public class User extends AuditModel {
     private String phoneNumber;
 
     private String name;
+    private String bio;
 
     @DBRef
     private Picture picture;
@@ -32,6 +33,11 @@ public class User extends AuditModel {
     private City city;
 
     private Integer level;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Badge> badges;
 
     @DBRef(lazy = true)
     @ToString.Exclude

@@ -36,7 +36,7 @@ public class Seeder implements CommandLineRunner {
         City city = City.builder()
                 .names(names)
                 .places(new LinkedHashSet<>())
-                .data("RANDOM DATA")
+//                .data("RANDOM DATA")
                 .build();
         this.cityRepository.save(city);
 
@@ -55,7 +55,9 @@ public class Seeder implements CommandLineRunner {
         Place place = Place.builder()
                 .admin(admin)
                 .city(city)
+                .title("اکبر جوجه شعبه صدف")
                 .detail("غذای خوش مزه داریم")
+//                .data("RANDOM DATA")
                 .feedbacks(new LinkedHashSet<>())
                 .pictures(new LinkedHashSet<>())
                 .views(new LinkedHashSet<>())
@@ -63,7 +65,6 @@ public class Seeder implements CommandLineRunner {
                 .lng(Float.parseFloat("45.5"))
                 .rate(Float.parseFloat("3.5"))
                 .rules("تست قوانین تست قوانین تست قوانین تست قوانین تست قوانین تست قوانین ")
-                .title("اکبر جوجه شعبه صدف")
                 .build();
         this.placeRepository.save(place);
 
