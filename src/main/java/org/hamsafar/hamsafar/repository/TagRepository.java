@@ -9,9 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface TagRepository extends MongoRepository<Tag, String> {
-    List<Tag> findAllByVerifiedTrue();
-
     Optional<Tag> findByIdAndVerifiedTrue(String id);
+
+    List<Tag> findAllByVerifiedTrue();
 
     Optional<Tag> findByTitleAndVerifiedTrue(String title);
 }

@@ -7,9 +7,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PlaceRepository extends MongoRepository<Place, String> {
+    Optional<Place> findByIdAndVerifiedTrue(String id);
+
     List<Place> findAllByVerifiedTrue();
 
     Page<Place> findAllByVerified(Boolean isVerified, Pageable pageable);

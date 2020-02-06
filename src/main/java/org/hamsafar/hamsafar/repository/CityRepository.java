@@ -11,6 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface CityRepository extends MongoRepository<City, String> {
+    Optional<City> findByIdAndVerifiedTrue(String id);
+
     Optional<City> findByNamesContains(List<String> names);
 
     List<City> findAllByVerifiedTrue();
