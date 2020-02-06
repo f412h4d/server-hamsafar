@@ -42,7 +42,7 @@ public class UserAuth {
     }
 
     @GraphQLMutation
-    public User loginUser(@GraphQLNonNull String phoneNumber, @GraphQLNonNull String password) {
+    public User loginUser(@GraphQLNonNull String phoneNumber) {
         return this.userService.getUserByPhoneNumber(phoneNumber);
     }
 }
