@@ -26,7 +26,6 @@ public class Admin extends AuditModel {
     private String password;
     private String token;
 
-    private String companyName;
     private Integer credit;
 
     @DBRef(lazy = true)
