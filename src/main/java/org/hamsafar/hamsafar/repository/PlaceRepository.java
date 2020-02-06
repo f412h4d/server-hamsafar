@@ -1,6 +1,7 @@
 package org.hamsafar.hamsafar.repository;
 
 import org.hamsafar.hamsafar.model.Place;
+import org.hamsafar.hamsafar.model.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -12,6 +13,8 @@ import java.util.Optional;
 @Repository
 public interface PlaceRepository extends MongoRepository<Place, String> {
     Optional<Place> findByIdAndVerifiedTrue(String id);
+
+    List<Place> findAllByTagIsIn(List<Tag> tags);
 
     List<Place> findAllByVerifiedTrue();
 
