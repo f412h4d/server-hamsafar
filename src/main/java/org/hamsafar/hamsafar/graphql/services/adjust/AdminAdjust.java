@@ -10,6 +10,7 @@ import org.hamsafar.hamsafar.repository.AdminRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.LinkedHashSet;
 import java.util.Optional;
 
 @Slf4j
@@ -35,6 +36,8 @@ public class AdminAdjust {
                         .name(name)
                         .username(userName)
                         .password(password)
+                        .places(new LinkedHashSet<>())
+                        .events(new LinkedHashSet<>())
                         .build()
         );
     }
