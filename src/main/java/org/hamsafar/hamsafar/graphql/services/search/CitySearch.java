@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -21,6 +22,11 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public class CitySearch {
     private final CityRepository cityRepository;
+
+    @GraphQLQuery
+    public List<City> getAllCities() {
+        return this.cityRepository.findAllByVerifiedTrue();
+    }
 
     @GraphQLQuery
     public Stream<City> getAllCitiesBySizeAndOffset(@GraphQLArgument(name = "offset", defaultValue = "0", description = "Offset item from beginning of data") int offset,

@@ -10,6 +10,7 @@ import org.hamsafar.hamsafar.repository.TagRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -19,6 +20,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TagSearch {
     private final TagRepository tagRepository;
+
+    @GraphQLQuery
+    public List<Tag> getAllTags() {
+        return this.tagRepository.findAllByVerifiedTrue();
+    }
 
     @GraphQLQuery
     public Tag getTagByTitle(@GraphQLNonNull String title) {
