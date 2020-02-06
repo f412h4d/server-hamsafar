@@ -20,6 +20,7 @@ import java.util.Set;
 public class User extends AuditModel {
     @Indexed(unique = true)
     private String phoneNumber;
+    private String token;
 
     private String name;
     private String bio;
@@ -42,7 +43,12 @@ public class User extends AuditModel {
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Place> visited;
+    private Set<Place> viewed;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Place> checkedIn;
 
     @DBRef(lazy = true)
     @ToString.Exclude
