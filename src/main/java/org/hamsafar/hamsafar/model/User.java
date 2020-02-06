@@ -35,6 +35,8 @@ public class User extends AuditModel {
     private City city;
 
     private Integer level;
+    private Integer score;
+    private Integer levelLimit;
 
     @DBRef(lazy = true)
     @ToString.Exclude

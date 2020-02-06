@@ -55,6 +55,8 @@ public class UserAdjust {
                 .name(name)
                 .city(optionalCity.get())
                 .level(1)
+                .score(0)
+                .levelLimit(15)
                 .badges(new LinkedHashSet<>())
                 .booked(new LinkedHashSet<>())
                 .viewed(new LinkedHashSet<>())
