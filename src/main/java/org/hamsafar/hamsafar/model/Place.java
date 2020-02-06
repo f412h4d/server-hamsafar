@@ -3,6 +3,7 @@ package org.hamsafar.hamsafar.model;
 import io.leangen.graphql.annotations.types.GraphQLType;
 import lombok.*;
 import org.hamsafar.hamsafar.model.audits.AuditModel;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,6 +23,12 @@ public class Place extends AuditModel {
     private Admin admin;
 
     @DBRef
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Tag tag;
+
+    @DBRef
+    @Indexed
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private City city;
