@@ -36,7 +36,6 @@ public class UserAdjust {
         return this.adminRepository.save(Admin.builder()
                 .name(optionalUser.get().getName())
                 .username(optionalUser.get().getPhoneNumber())
-                .companyName(optionalUser.get().getPhoneNumber())
                 .credit(0)
                 .password(password)
                 .places(new LinkedHashSet<>())
@@ -58,7 +57,8 @@ public class UserAdjust {
                 .level(1)
                 .badges(new LinkedHashSet<>())
                 .booked(new LinkedHashSet<>())
-                .visited(new LinkedHashSet<>())
+                .viewed(new LinkedHashSet<>())
+                .checkedIn(new LinkedHashSet<>())
                 .build());
     }
 
