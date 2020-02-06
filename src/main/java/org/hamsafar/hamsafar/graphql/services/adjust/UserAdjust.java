@@ -5,12 +5,8 @@ import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hamsafar.hamsafar.model.Admin;
-import org.hamsafar.hamsafar.model.City;
-import org.hamsafar.hamsafar.model.User;
-import org.hamsafar.hamsafar.repository.AdminRepository;
-import org.hamsafar.hamsafar.repository.CityRepository;
-import org.hamsafar.hamsafar.repository.UserRepository;
+import org.hamsafar.hamsafar.model.*;
+import org.hamsafar.hamsafar.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -26,6 +22,8 @@ public class UserAdjust {
     private final UserRepository userRepository;
     private final AdminRepository adminRepository;
     private final CityRepository cityRepository;
+    private final PlaceRepository placeRepository;
+    private final EventRepository eventRepository;
 
     @GraphQLMutation
     public Admin addAdminOfUser(@GraphQLNonNull String phoneNumber, @GraphQLNonNull String password) {
@@ -86,6 +84,44 @@ public class UserAdjust {
         if (name != null) {
             optionalUser.get().setName(name);
         }
+        return this.userRepository.save(optionalUser.get());
+    }
+
+    @GraphQLMutation
+    public User checkInPlace(@GraphQLNonNull String phoneNumber,
+                             @GraphQLNonNull String placeId) {
+        Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("Invalid User Id, Not Found");
+        }
+        Optional<Place> optionalPlace = this.placeRepository.findByIdAndVerifiedTrue(placeId);
+        if (optionalPlace.isEmpty()) {
+            throw new RuntimeException("Invalid Place Id, Not Found");
+        }
+        optionalPlace.get().getCheckedIns().add(optionalUser.get());
+        this.placeRepository.save(optionalPlace.get());
+
+        optionalUser.get().getCheckedInPlaces().add(optionalPlace.get());
+
+        return this.userRepository.save(optionalUser.get());
+    }
+
+    @GraphQLMutation
+    public User checkInEvent(@GraphQLNonNull String phoneNumber,
+                             @GraphQLNonNull String eventId) {
+        Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("Invalid User Id, Not Found");
+        }
+        Optional<Event> optionalEvent = this.eventRepository.findByIdAndVerifiedTrue(eventId);
+        if (optionalEvent.isEmpty()) {
+            throw new RuntimeException("Invalid Event Id, Not Found");
+        }
+        optionalEvent.get().getCheckedIns().add(optionalUser.get());
+        this.eventRepository.save(optionalEvent.get());
+
+        optionalUser.get().getCheckedInEvents().add(optionalEvent.get());
+
         return this.userRepository.save(optionalUser.get());
     }
 }
