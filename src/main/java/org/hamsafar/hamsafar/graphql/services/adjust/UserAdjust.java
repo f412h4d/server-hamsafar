@@ -58,9 +58,12 @@ public class UserAdjust {
                 .score(0)
                 .levelLimit(15)
                 .badges(new LinkedHashSet<>())
-                .booked(new LinkedHashSet<>())
-                .viewed(new LinkedHashSet<>())
-                .checkedIn(new LinkedHashSet<>())
+                .bookedPlaces(new LinkedHashSet<>())
+                .bookedEvents(new LinkedHashSet<>())
+                .viewedPlaces(new LinkedHashSet<>())
+                .viewedEvents(new LinkedHashSet<>())
+                .checkedInPlaces(new LinkedHashSet<>())
+                .checkedInEvents(new LinkedHashSet<>())
                 .build());
     }
 
