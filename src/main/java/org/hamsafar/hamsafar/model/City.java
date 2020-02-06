@@ -23,6 +23,4 @@ public class City extends AuditModel {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Place> places;
-
-    private String data;
 }
