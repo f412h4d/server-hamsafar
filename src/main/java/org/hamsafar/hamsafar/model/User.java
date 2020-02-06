@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -34,6 +35,11 @@ public class User extends AuditModel {
     private City city;
 
     private Integer level;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Recommend> recommends;
 
     @DBRef(lazy = true)
     @ToString.Exclude
