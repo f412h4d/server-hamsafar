@@ -26,5 +26,12 @@ public class Feedback extends AuditModel {
     @EqualsAndHashCode.Exclude
     private Place place;
 
+    @DBRef
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Event event;
+
+    private Boolean isConfirmed;
+    private String content;
     private Integer rate;
 }
