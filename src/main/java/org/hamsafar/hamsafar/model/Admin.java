@@ -37,4 +37,7 @@ public class Admin extends AuditModel {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Event> events;
+
+    @DBRef
+    private Picture picture;
 }
