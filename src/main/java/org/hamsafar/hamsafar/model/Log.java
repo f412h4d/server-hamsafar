@@ -26,6 +26,11 @@ public class Log extends AuditModel {
     @EqualsAndHashCode.Exclude
     private Place place;
 
+    @DBRef
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Event event;
+
     private String action;
     private Date date;
 }

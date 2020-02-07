@@ -15,6 +15,8 @@ public interface LogRepository extends MongoRepository<Log, String> {
 
     List<Log> findAllByUserIdAndPlaceIdAndActionOrderByDateDesc(String userId, String placeId, String action);
 
+    List<Log> findAllByUserIdAndEventIdAndActionOrderByDateDesc(String userId, String placeId, String action);
+
     List<Log> findAllByVerifiedTrue();
 
     Page<Log> findAllByVerified(Boolean isVerified, Pageable pageable);

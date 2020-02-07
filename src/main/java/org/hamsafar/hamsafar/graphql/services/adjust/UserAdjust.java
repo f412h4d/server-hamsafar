@@ -104,7 +104,7 @@ public class UserAdjust {
         if (optionalPlace.isEmpty()) {
             throw new RuntimeException("Invalid Place Id, Not Found");
         }
-        List<Log> logs = this.logRepository.findAllByUserIdAndPlaceIdAndActionOrderByDateDesc(optionalUser.get().getId(), optionalPlace.get().getId(), "checkIn");
+        List<Log> logs = this.logRepository.findAllByUserIdAndPlaceIdAndActionOrderByDateDesc(optionalUser.get().getId(), optionalPlace.get().getId(), "checkInPlace");
 
         if (!logs.isEmpty()) {
             Date oldDate = logs.get(0).getDate();
@@ -120,9 +120,10 @@ public class UserAdjust {
         this.placeRepository.save(optionalPlace.get());
 
         Log log = this.logRepository.save(Log.builder()
-                .action("checkIn")
+                .action("checkInPlace")
                 .date(new Date())
                 .place(optionalPlace.get())
+                .event(null)
                 .user(optionalUser.get())
                 .build());
         optionalUser.get().getLogs().add(log);
@@ -142,9 +143,23 @@ public class UserAdjust {
         if (optionalEvent.isEmpty()) {
             throw new RuntimeException("Invalid Event Id, Not Found");
         }
+        List<Log> logs = this.logRepository.findAllByUserIdAndEventIdAndActionOrderByDateDesc(optionalUser.get().getId(), optionalEvent.get().getId(), "checkInEvent");
+
+        if (!logs.isEmpty()) {
+            throw new RuntimeException("You Can CheckIn Only Once");
+        }
+
         optionalEvent.get().getCheckedIns().add(optionalUser.get());
         this.eventRepository.save(optionalEvent.get());
 
+        Log log = this.logRepository.save(Log.builder()
+                .action("checkInEvent")
+                .date(new Date())
+                .place(null)
+                .event(optionalEvent.get())
+                .user(optionalUser.get())
+                .build());
+        optionalUser.get().getLogs().add(log);
         optionalUser.get().getCheckedInEvents().add(optionalEvent.get());
 
         return this.userRepository.save(optionalUser.get());
