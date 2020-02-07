@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode(callSuper = false)
 public class Feedback extends AuditModel {
     @DBRef
-    @Indexed(unique = true)
+    @Indexed
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private User user;
