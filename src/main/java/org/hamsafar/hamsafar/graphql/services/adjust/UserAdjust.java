@@ -37,6 +37,7 @@ public class UserAdjust {
                 .credit(0)
                 .password(password)
                 .places(new LinkedHashSet<>())
+                .events(new LinkedHashSet<>())
                 .build());
     }
 

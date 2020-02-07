@@ -36,6 +36,7 @@ public class AdminAdjust {
                         .name(name)
                         .username(userName)
                         .password(password)
+                        .credit(0)
                         .places(new LinkedHashSet<>())
                         .events(new LinkedHashSet<>())
                         .build()
