@@ -27,7 +27,7 @@ public class PictureController {
     @PostMapping({"/uploadPic", "/uploadPic/"})
     public Picture uploadFile(@RequestParam("picture") MultipartFile picture) {
         final String PICTURE_NAME = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "-" + StringUtils.cleanPath(Objects.requireNonNull(picture.getOriginalFilename()));
-        final String SERVER_PATH = "/uploads/";
+        final String SERVER_PATH = "/home/sinoed/code/uploads/";
 
         fileStorageService.storeFile(picture, PICTURE_NAME);
 
