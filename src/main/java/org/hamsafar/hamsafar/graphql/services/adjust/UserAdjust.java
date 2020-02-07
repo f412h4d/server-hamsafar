@@ -213,7 +213,7 @@ public class UserAdjust {
         if (optionalInviterUser.isEmpty()) {
             throw new RuntimeException("Invalid User Phone Number, Not Found");
         }
-        Optional<User> optionalGuestUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(inviterPhoneNumber);
+        Optional<User> optionalGuestUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(guestPhoneNumber);
         if (optionalGuestUser.isEmpty()) {
             throw new RuntimeException("Invalid User Phone Number, Not Found");
         }
@@ -223,11 +223,29 @@ public class UserAdjust {
         }
 
         // todo sent push
-        optionalEvent.get().get().add(optionalGuestUser.get());
-        this.eventRepository.save(optionalEvent.get());
+        optionalGuestUser.get().getInvitedEvents().add(optionalEvent.get());
+        return this.userRepository.save(optionalGuestUser.get());
+    }
 
-        optionalUser.get().getBookedEvents().add(optionalEvent.get());
+    @GraphQLMutation
+    public User inviteToPlace(@GraphQLNonNull String inviterPhoneNumber,
+                              @GraphQLNonNull String guestPhoneNumber,
+                              @GraphQLNonNull String placeId) {
+        Optional<User> optionalInviterUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(inviterPhoneNumber);
+        if (optionalInviterUser.isEmpty()) {
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
+        }
+        Optional<User> optionalGuestUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(guestPhoneNumber);
+        if (optionalGuestUser.isEmpty()) {
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
+        }
+        Optional<Place> optionalPlace = this.placeRepository.findByIdAndVerifiedTrue(placeId);
+        if (optionalPlace.isEmpty()) {
+            throw new RuntimeException("Invalid Place Id, Not Found");
+        }
 
-        return this.userRepository.save(optionalUser.get());
+        // todo sent push
+        optionalGuestUser.get().getInvitedPlaces().add(optionalPlace.get());
+        return this.userRepository.save(optionalGuestUser.get());
     }
 }
