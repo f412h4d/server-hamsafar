@@ -3,7 +3,6 @@ package org.hamsafar.hamsafar.model;
 import io.leangen.graphql.annotations.types.GraphQLType;
 import lombok.*;
 import org.hamsafar.hamsafar.model.audits.AuditModel;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,7 +15,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode(callSuper = false)
 public class Feedback extends AuditModel {
     @DBRef
-    @Indexed
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private User user;
