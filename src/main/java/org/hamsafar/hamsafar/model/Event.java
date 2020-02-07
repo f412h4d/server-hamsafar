@@ -76,4 +76,9 @@ public class Event extends AuditModel {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Feedback> feedbacks;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Video> videos;
 }

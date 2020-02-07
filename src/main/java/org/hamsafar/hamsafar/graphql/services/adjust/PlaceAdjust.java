@@ -75,6 +75,7 @@ public class PlaceAdjust {
                 .views(new LinkedHashSet<>())
                 // todo set pictures
                 .pictures(new LinkedHashSet<>())
+                .videos(new LinkedHashSet<>())
                 .build());
 
         optionalCity.get().getPlaces().add(place);

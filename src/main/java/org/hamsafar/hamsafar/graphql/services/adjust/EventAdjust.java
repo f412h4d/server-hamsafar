@@ -73,6 +73,7 @@ public class EventAdjust {
                 .books(new LinkedHashSet<>())
                 // todo set pictures
                 .picture(null)
+                .videos(new LinkedHashSet<>())
                 .build());
 
         optionalCity.get().getEvents().add(event);
