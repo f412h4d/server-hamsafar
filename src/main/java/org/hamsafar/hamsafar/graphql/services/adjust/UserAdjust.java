@@ -119,15 +119,18 @@ public class UserAdjust {
         optionalPlace.get().getCheckedIns().add(optionalUser.get());
         this.placeRepository.save(optionalPlace.get());
 
-        Log log = this.logRepository.save(Log.builder()
+        Log placeLog = this.logRepository.save(Log.builder()
                 .action("checkInPlace")
                 .date(new Date())
                 .place(optionalPlace.get())
                 .event(null)
                 .user(optionalUser.get())
                 .build());
-        optionalUser.get().getLogs().add(log);
+
+        optionalUser.get().getLogs().add(placeLog);
         optionalUser.get().getCheckedInPlaces().add(optionalPlace.get());
+
+        log.error(optionalUser.get().toString());
 
         return this.userRepository.save(optionalUser.get());
     }

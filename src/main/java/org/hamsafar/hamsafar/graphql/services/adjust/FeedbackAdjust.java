@@ -16,7 +16,9 @@ import org.hamsafar.hamsafar.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -44,7 +46,8 @@ public class FeedbackAdjust {
         if (optionalUser.isEmpty()) {
             throw new RuntimeException("Invalid User Id, Not Found");
         }
-        return this.feedbackRepository.save(Feedback.builder()
+
+        Feedback feedback = this.feedbackRepository.save(Feedback.builder()
                 .content(content)
                 .rate(rate)
                 .isConfirmed(true)
@@ -52,6 +55,33 @@ public class FeedbackAdjust {
                 .place(optionalPlace.get())
                 .user(optionalUser.get())
                 .build());
+
+        optionalPlace.get().getFeedbacks().add(feedback);
+
+        Set<Feedback> placeFeedbacks = optionalPlace.get().getFeedbacks();
+        int placeFeedbacksLength = placeFeedbacks.size();
+        float placeAverage = 0;
+
+        for (Feedback f : placeFeedbacks) {
+            placeAverage += f.getRate();
+        }
+        placeAverage /= placeFeedbacksLength;
+
+        List<Feedback> allFeedbacks = this.feedbackRepository.findAllByVerifiedTrue();
+        int allFeedbacksLength = allFeedbacks.size();
+        float allPlacesAverage = 0;
+
+        for (Feedback f : allFeedbacks) {
+            allPlacesAverage += f.getRate();
+        }
+        placeAverage /= allFeedbacksLength;
+
+        float newAverage = (placeAverage * placeFeedbacksLength + 5 * allPlacesAverage) / (placeFeedbacksLength + 5);
+
+        optionalPlace.get().setRate(newAverage);
+        this.placeRepository.save(optionalPlace.get());
+
+        return feedback;
     }
 
     @GraphQLMutation
@@ -67,7 +97,7 @@ public class FeedbackAdjust {
         if (optionalUser.isEmpty()) {
             throw new RuntimeException("Invalid User Id, Not Found");
         }
-        return this.feedbackRepository.save(Feedback.builder()
+        Feedback feedback = this.feedbackRepository.save(Feedback.builder()
                 .content(content)
                 .rate(rate)
                 .isConfirmed(true)
@@ -75,6 +105,33 @@ public class FeedbackAdjust {
                 .place(null)
                 .user(optionalUser.get())
                 .build());
+
+        optionalEvent.get().getFeedbacks().add(feedback);
+
+        Set<Feedback> placeFeedbacks = optionalEvent.get().getFeedbacks();
+        int eventFeedbacksLength = placeFeedbacks.size();
+        float eventAverage = 0;
+
+        for (Feedback f : placeFeedbacks) {
+            eventAverage += f.getRate();
+        }
+        eventAverage /= eventFeedbacksLength;
+
+        List<Feedback> allFeedbacks = this.feedbackRepository.findAllByVerifiedTrue();
+        int allFeedbacksLength = allFeedbacks.size();
+        float allEventsAverage = 0;
+
+        for (Feedback f : allFeedbacks) {
+            allEventsAverage += f.getRate();
+        }
+        eventAverage /= allFeedbacksLength;
+
+        float newAverage = (eventAverage * eventFeedbacksLength + 5 * allEventsAverage) / (eventFeedbacksLength + 5);
+
+        optionalEvent.get().setRate(newAverage);
+        this.eventRepository.save(optionalEvent.get());
+
+        return feedback;
     }
 
     @GraphQLMutation
