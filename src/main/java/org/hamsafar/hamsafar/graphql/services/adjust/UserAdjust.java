@@ -62,6 +62,10 @@ public class UserAdjust {
                 .viewedEvents(new LinkedHashSet<>())
                 .checkedInPlaces(new LinkedHashSet<>())
                 .checkedInEvents(new LinkedHashSet<>())
+                .bookedPlaces(new LinkedHashSet<>())
+                .bookedEvents(new LinkedHashSet<>())
+                .invitedPlaces(new LinkedHashSet<>())
+                .invitedEvents(new LinkedHashSet<>())
                 .build());
     }
 
@@ -72,7 +76,7 @@ public class UserAdjust {
             String cityId) {
         Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("Invalid User Id, Not Found");
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
         }
         if (cityId != null) {
             Optional<City> optionalCity = this.cityRepository.findByIdAndVerifiedTrue(cityId);
@@ -92,7 +96,7 @@ public class UserAdjust {
                              @GraphQLNonNull String placeId) {
         Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("Invalid User Id, Not Found");
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
         }
         Optional<Place> optionalPlace = this.placeRepository.findByIdAndVerifiedTrue(placeId);
         if (optionalPlace.isEmpty()) {
@@ -111,7 +115,7 @@ public class UserAdjust {
                              @GraphQLNonNull String eventId) {
         Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("Invalid User Id, Not Found");
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
         }
         Optional<Event> optionalEvent = this.eventRepository.findByIdAndVerifiedTrue(eventId);
         if (optionalEvent.isEmpty()) {
@@ -130,7 +134,7 @@ public class UserAdjust {
                           @GraphQLNonNull String placeId) {
         Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("Invalid User Id, Not Found");
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
         }
         Optional<Place> optionalPlace = this.placeRepository.findByIdAndVerifiedTrue(placeId);
         if (optionalPlace.isEmpty()) {
@@ -149,7 +153,7 @@ public class UserAdjust {
                           @GraphQLNonNull String eventId) {
         Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("Invalid User Id, Not Found");
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
         }
         Optional<Event> optionalEvent = this.eventRepository.findByIdAndVerifiedTrue(eventId);
         if (optionalEvent.isEmpty()) {
@@ -168,7 +172,7 @@ public class UserAdjust {
                           @GraphQLNonNull String placeId) {
         Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("Invalid User Id, Not Found");
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
         }
         Optional<Place> optionalPlace = this.placeRepository.findByIdAndVerifiedTrue(placeId);
         if (optionalPlace.isEmpty()) {
@@ -187,13 +191,39 @@ public class UserAdjust {
                           @GraphQLNonNull String eventId) {
         Optional<User> optionalUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(phoneNumber);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("Invalid User Id, Not Found");
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
         }
         Optional<Event> optionalEvent = this.eventRepository.findByIdAndVerifiedTrue(eventId);
         if (optionalEvent.isEmpty()) {
             throw new RuntimeException("Invalid Event Id, Not Found");
         }
         optionalEvent.get().getBooks().add(optionalUser.get());
+        this.eventRepository.save(optionalEvent.get());
+
+        optionalUser.get().getBookedEvents().add(optionalEvent.get());
+
+        return this.userRepository.save(optionalUser.get());
+    }
+
+    @GraphQLMutation
+    public User inviteToEvent(@GraphQLNonNull String inviterPhoneNumber,
+                              @GraphQLNonNull String guestPhoneNumber,
+                              @GraphQLNonNull String eventId) {
+        Optional<User> optionalInviterUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(inviterPhoneNumber);
+        if (optionalInviterUser.isEmpty()) {
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
+        }
+        Optional<User> optionalGuestUser = this.userRepository.findByPhoneNumberAndVerifiedTrue(inviterPhoneNumber);
+        if (optionalGuestUser.isEmpty()) {
+            throw new RuntimeException("Invalid User Phone Number, Not Found");
+        }
+        Optional<Event> optionalEvent = this.eventRepository.findByIdAndVerifiedTrue(eventId);
+        if (optionalEvent.isEmpty()) {
+            throw new RuntimeException("Invalid Event Id, Not Found");
+        }
+
+        // todo sent push
+        optionalEvent.get().get().add(optionalGuestUser.get());
         this.eventRepository.save(optionalEvent.get());
 
         optionalUser.get().getBookedEvents().add(optionalEvent.get());

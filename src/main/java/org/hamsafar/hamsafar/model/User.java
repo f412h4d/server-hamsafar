@@ -77,4 +77,14 @@ public class User extends AuditModel {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Event> bookedEvents;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Place> invitedPlaces;
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Event> invitedEvents;
 }
