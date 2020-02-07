@@ -10,8 +10,7 @@ import org.hamsafar.hamsafar.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.LinkedHashSet;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -24,6 +23,7 @@ public class UserAdjust {
     private final CityRepository cityRepository;
     private final PlaceRepository placeRepository;
     private final EventRepository eventRepository;
+    private final LogRepository logRepository;
 
     @GraphQLMutation
     public Admin addAdminOfUser(@GraphQLNonNull String phoneNumber, @GraphQLNonNull String password) {
@@ -56,13 +56,14 @@ public class UserAdjust {
                 .level(1)
                 .score(0)
                 .levelLimit(15)
+                .logs(new LinkedList<>())
                 .badges(new LinkedHashSet<>())
                 .bookedPlaces(new LinkedHashSet<>())
                 .bookedEvents(new LinkedHashSet<>())
                 .viewedPlaces(new LinkedHashSet<>())
                 .viewedEvents(new LinkedHashSet<>())
-                .checkedInPlaces(new LinkedHashSet<>())
-                .checkedInEvents(new LinkedHashSet<>())
+                .checkedInPlaces(new LinkedList<>())
+                .checkedInEvents(new LinkedList<>())
                 .bookedPlaces(new LinkedHashSet<>())
                 .bookedEvents(new LinkedHashSet<>())
                 .invitedPlaces(new LinkedHashSet<>())
@@ -103,9 +104,28 @@ public class UserAdjust {
         if (optionalPlace.isEmpty()) {
             throw new RuntimeException("Invalid Place Id, Not Found");
         }
+        List<Log> logs = this.logRepository.findAllByUserIdAndPlaceIdAndActionOrderByDateDesc(optionalUser.get().getId(), optionalPlace.get().getId(), "checkIn");
+
+        if (!logs.isEmpty()) {
+            Date oldDate = logs.get(0).getDate();
+            Calendar c = Calendar.getInstance();
+            c.setTime(oldDate);
+            c.add(Calendar.DAY_OF_MONTH, 1);
+            if (new Date().before(c.getTime())) {
+                throw new RuntimeException("You Can CheckIn Once A Day");
+            }
+        }
+
         optionalPlace.get().getCheckedIns().add(optionalUser.get());
         this.placeRepository.save(optionalPlace.get());
 
+        Log log = this.logRepository.save(Log.builder()
+                .action("checkIn")
+                .date(new Date())
+                .place(optionalPlace.get())
+                .user(optionalUser.get())
+                .build());
+        optionalUser.get().getLogs().add(log);
         optionalUser.get().getCheckedInPlaces().add(optionalPlace.get());
 
         return this.userRepository.save(optionalUser.get());

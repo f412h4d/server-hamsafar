@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 @EnableMongoAuditing
 @SpringBootApplication
-
 @EnableConfigurationProperties({
         UploadedFile.class
 })

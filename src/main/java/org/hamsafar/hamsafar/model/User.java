@@ -38,6 +38,12 @@ public class User extends AuditModel {
     private Integer score;
     private Integer levelLimit;
 
+
+    @DBRef(lazy = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Log> logs;
+
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -61,12 +67,12 @@ public class User extends AuditModel {
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Place> checkedInPlaces;
+    private List<Place> checkedInPlaces;
 
     @DBRef(lazy = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Event> checkedInEvents;
+    private List<Event> checkedInEvents;
 
     @DBRef(lazy = true)
     @ToString.Exclude
