@@ -86,4 +86,25 @@ public class PlaceAdjust {
 
         return place;
     }
+
+    @GraphQLMutation
+    public Place editPlace(@GraphQLNonNull String placeId,
+                           String title,
+                           String header,
+                           String detail) {
+        Optional<Place> optionalPlace = this.placeRepository.findByIdAndVerifiedTrue(placeId);
+        if (optionalPlace.isEmpty()) {
+            throw new RuntimeException("Place Not Found");
+        }
+        if (title != null) {
+            optionalPlace.get().setTitle(title);
+        }
+        if (header != null) {
+            optionalPlace.get().setHeader(header);
+        }
+        if (detail != null) {
+            optionalPlace.get().setDetail(detail);
+        }
+        return this.placeRepository.save(optionalPlace.get());
+    }
 }
