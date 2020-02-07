@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 public class SchemaGenerator {
     private final AdminAdjust adminAdjust;
     private final CityAdjust cityAdjust;
+    private final EventAdjust eventAdjust;
+    private final FeedbackAdjust feedbackAdjust;
     private final PlaceAdjust placeAdjust;
     private final TagAdjust tagAdjust;
     private final UserAdjust userAdjust;
@@ -37,6 +39,7 @@ public class SchemaGenerator {
     private final AdminService adminService;
     private final CityService cityService;
     private final EventService eventService;
+    private final FeedbackService feedbackService;
     private final PlaceService placeService;
     private final TagService tagService;
     private final UserService userService;
@@ -47,10 +50,10 @@ public class SchemaGenerator {
                 .withResolverBuilders(
                         new AnnotatedResolverBuilder())
                 .withOperationsFromSingletons(
-                        adminAdjust, cityAdjust, placeAdjust, tagAdjust, userAdjust,
+                        adminAdjust, cityAdjust, placeAdjust, tagAdjust, userAdjust, eventAdjust, feedbackAdjust,
                         adminAuth, userAuth,
                         adminSearch, citySearch, eventSearch, placeSearch,
-                        adminService, cityService, eventService, placeService, tagService, userService)
+                        adminService, cityService, eventService, placeService, tagService, userService, feedbackService)
                 .withValueMapperFactory(new JacksonValueMapperFactory())
                 .generate();
         return GraphQL.newGraphQL(schema).build();
